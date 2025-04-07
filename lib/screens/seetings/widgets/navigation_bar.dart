@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+// Assure-toi d'importer tes pages
+//import 'home_page.dart'; // Page d'accueil
+import '../../map_page.dart'; // Page de carte
+import '../../settings_page.dart'; // Page de paramètres
+import '../../controller_page.dart';
+import '../../home_page.dart';
+
 class CustomNavigationBar extends StatelessWidget {
   final String? selectedIconId;
   final Function(String) onIconPressed;
@@ -69,7 +76,36 @@ class CustomNavigationBar extends StatelessWidget {
         color: isSelected ? colors.primary : colors.onSurface.withOpacity(0.6),
         size: 40,
       ),
-      onPressed: () => onIconPressed(id),
+      onPressed: () {
+        onIconPressed(id);
+        // Naviguer vers la page appropriée en fonction de l'ID
+        switch (id) {
+          case 'home':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+            break;
+          case 'map':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MapPage()),
+            );
+            break;
+          case 'game':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ControllerPage()),
+            );
+            break;
+          case 'settings':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+            break;
+        }
+      },
     );
   }
 }
