@@ -18,6 +18,9 @@ class SettingsProvider extends ChangeNotifier {
   bool _lowBatteryAlert = false;
   String? _selectedIconId;
 
+  // Ajouter l'état pour la surveillance des angles morts
+  bool _blindSpotEnabled = false; // Valeur initiale
+
   // Getters publics
   int get selectedIndex => _selectedIndex;
   String? get blurredIcon => _blurredIcon;
@@ -33,6 +36,15 @@ class SettingsProvider extends ChangeNotifier {
   bool get showBatteryInNavBar => _showBatteryInNavBar;
   bool get lowBatteryAlert => _lowBatteryAlert;
   String? get selectedIconId => _selectedIconId;
+
+  // Getter pour la surveillance des angles morts
+  bool get blindSpotEnabled => _blindSpotEnabled;
+
+  // Setter pour la surveillance des angles morts
+  set blindSpotEnabled(bool value) {
+    _blindSpotEnabled = value;
+    notifyListeners(); // Pour notifier l'UI qu'il y a un changement
+  }
 
   // Setters avec validation et notification
   set selectedIndex(int value) {

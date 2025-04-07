@@ -8,7 +8,9 @@ import 'sections/language_section.dart';
 import 'sections/battery_section.dart';
 import 'sections/sound_section.dart';
 import 'sections/Vitesse_section.dart';
-import 'sections/language_section.dart';
+import 'sections/angle_section.dart';
+import 'sections/vocale_section.dart';
+import 'sections/panneaux_section.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -157,6 +159,9 @@ class _SettingsPageState extends State<SettingsPage> {
       const BatterySection(),
       const LanguageDisplaySection(),
       const VitesseSection(),
+      const BlindSpotSection(),
+      const VoiceCommandsSection(),
+      const PanelRecognitionSection(),
     ];
 
     return AnimatedSwitcher(

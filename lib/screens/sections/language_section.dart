@@ -25,7 +25,7 @@ class _LanguageDisplaySectionState extends State<LanguageDisplaySection> {
           children: [
             const SizedBox(height: 12),
 
-            // LANGAGE
+            // LANGAGE Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
@@ -33,9 +33,7 @@ class _LanguageDisplaySectionState extends State<LanguageDisplaySection> {
                   Text(
                     "Langage",
                     style: TextStyle(
-                      fontSize: 16,
                       color: colors.textPrimary,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -72,7 +70,7 @@ class _LanguageDisplaySectionState extends State<LanguageDisplaySection> {
 
             const SizedBox(height: 20),
 
-            // ÉCRAN
+            // ÉCRAN Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text("Écran",
@@ -90,11 +88,11 @@ class _LanguageDisplaySectionState extends State<LanguageDisplaySection> {
 
             const SizedBox(height: 20),
 
-            // LUMINOSITÉ
+            // LUMINOSITÉ Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text("Luminosité",
-                  style: TextStyle(fontSize: 16, color: colors.textPrimary)),
+                  style: TextStyle(color: colors.textPrimary)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -123,7 +121,7 @@ class _LanguageDisplaySectionState extends State<LanguageDisplaySection> {
 
             const SizedBox(height: 10),
 
-            // CONFORT VISUEL
+            // CONFORT VISUEL Section
             SwitchListTile(
               title: Text("Confort visuel",
                   style: TextStyle(color: colors.textPrimary)),
@@ -141,43 +139,48 @@ class _LanguageDisplaySectionState extends State<LanguageDisplaySection> {
           ],
         ),
 
-        // DROPDOWN MENU LANGUE
+        // DROPDOWN MENU LANGUE with fade animation
         if (_isDropdownOpen)
-          Positioned(
-            left: 206,
+          AnimatedPositioned(
+            left: 198,
             top: 51,
-            child: Container(
-              width: 220,
-              decoration: BoxDecoration(
-                color: colors.surface,
-                borderRadius:
-                    const BorderRadius.vertical(bottom: Radius.circular(10)),
-                border: Border.all(color: colors.secondary),
-                boxShadow: [
-                  BoxShadow(
-                      color: colors.primary.withOpacity(0.1), blurRadius: 4)
-                ],
-              ),
-              child: ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                children: ["Français", "Anglais"].map((lang) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        provider.selectedLanguage = lang;
-                        _isDropdownOpen = false;
-                      });
-                      provider.notifyListeners();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.center,
-                      child: Text(lang,
-                          style: TextStyle(color: colors.textPrimary)),
-                    ),
-                  );
-                }).toList(),
+            duration: const Duration(milliseconds: 300),
+            child: AnimatedOpacity(
+              opacity: _isDropdownOpen ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 300),
+              child: Container(
+                width: 220,
+                decoration: BoxDecoration(
+                  color: colors.surface,
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(10)),
+                  border: Border.all(color: colors.secondary),
+                  boxShadow: [
+                    BoxShadow(
+                        color: colors.primary.withOpacity(0.1), blurRadius: 4)
+                  ],
+                ),
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  children: ["Français", "Anglais"].map((lang) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          provider.selectedLanguage = lang;
+                          _isDropdownOpen = false;
+                        });
+                        provider.notifyListeners();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        child: Text(lang,
+                            style: TextStyle(color: colors.textPrimary)),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),

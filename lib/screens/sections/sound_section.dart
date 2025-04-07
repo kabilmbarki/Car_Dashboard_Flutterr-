@@ -15,51 +15,74 @@ class SoundSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Slider for volume
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
+        // Titre pour activer les commandes vocales
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 20.0,
+              top: 12.0), // Customize x (left) and y (top) positioning
+          child: Text(
+            "Notifications", // Titre de la section
+            style: TextStyle(
+              color:
+                  colors.textPrimary, // Couleur du texte en fonction du thème
+            ),
+          ),
         ),
+        const SizedBox(height: 10), // Espacement après le titre
+
+        // Slider pour la luminosité
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            activeTrackColor: colors.primary, // Use custom primary color
-            inactiveTrackColor: colors.primary, // Use custom secondary color
-            thumbColor:
-                colors.textPrimary, // Use textPrimary color for the thumb
-            overlayColor: colors.primary
-                .withOpacity(0.2), // Use surface color for overlay effect
+            activeTrackColor:
+                colors.primary, // Couleur personnalisée pour la piste active
+            inactiveTrackColor:
+                colors.primary, // Couleur personnalisée pour la piste inactive
+            thumbColor: colors.textPrimary, // Couleur du curseur
+            overlayColor:
+                colors.primary.withOpacity(0.2), // Couleur de l'overlay
             valueIndicatorColor:
-                colors.background, // Use surface color for value indicator
+                colors.background, // Couleur de l'indicateur de valeur
             valueIndicatorTextStyle: TextStyle(color: colors.textPrimary),
           ),
           child: Slider(
-            value: provider.volume,
+            value: provider.brightness, // Valeur pour ajuster la luminosité
             onChanged: (double value) {
-              provider.volume = value;
+              provider.brightness =
+                  value; // Mettre à jour la valeur de la luminosité
             },
             divisions: 10,
-            label: "${(provider.volume * 100).round()}%",
+            label:
+                "${(provider.brightness).round()}%", // Afficher le pourcentage de luminosité
             min: 0,
-            max: 1,
+            max: 100,
           ),
         ),
 
-        // Switch for notifications
+        const SizedBox(height: 20), // Espacement après le slider
+
+        // Switch pour activer les notifications avec un ajustement de positionnement
         Consumer<SettingsProvider>(
           builder: (context, provider, child) {
-            return SwitchListTile(
-              title: const Text("Activer les notifications"),
-              value: provider.notificationsEnabled,
-              onChanged: (bool value) {
-                provider.notificationsEnabled = value;
-                provider.notifyListeners(); // Important to update the UI
-              },
-              activeColor: colors.surface, // Use surface color for active state
-              inactiveThumbColor:
-                  colors.secondary, // Use secondary color for inactive thumb
-              activeTrackColor:
-                  colors.primary, // Use surface color for active track
-              inactiveTrackColor:
-                  colors.surface, // Use secondary color for inactive track
+            return Padding(
+              padding: const EdgeInsets.only(
+                  left: 20.0,
+                  top: 10.0), // Customize x (left) and y (top) positioning
+              child: SwitchListTile(
+                title: const Text("Activer les notifications"),
+                value: provider.notificationsEnabled,
+                onChanged: (bool value) {
+                  provider.notificationsEnabled =
+                      value; // Mise à jour de l'état des notifications
+                  provider
+                      .notifyListeners(); // Important pour mettre à jour l'interface
+                },
+                activeColor: colors.surface, // Couleur de l'état actif
+                inactiveThumbColor:
+                    colors.secondary, // Couleur de l'état inactif
+                activeTrackColor: colors.primary, // Couleur de la piste active
+                inactiveTrackColor:
+                    colors.surface, // Couleur de la piste inactive
+              ),
             );
           },
         ),
